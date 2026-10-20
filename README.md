@@ -1,7 +1,7 @@
 ## Insert_Text_Extract
 
 ### Overview
-A simpe C program that inserts text into files/images extraxts them into another files with encryption and decryption (2 files).
+A simpe C program that inserts text into files/images extraxts them into another files with encryption and decryption so you will end up with 2 files and encrypted version and a decrypted one
 ### How to compile
 
 
