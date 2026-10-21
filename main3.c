@@ -91,12 +91,15 @@ int main ()
     int initialsize = ftell(fchecksize);
 
 fclose(fchecksize);
-    
+int key = rand()%26+1;
+    char* encryptedMes = (char*) malloc (strlen(stringtoadd));
+strcpy(encryptedMes,stringtoadd);
+  encryptCaesar(encryptedMes,key);
 
     int successaddenter=fputc('\n',fp);
 int successadddelimit= fputs(delimitter,fp);
 int successaddenter2=fputc('\n',fp);
-int successaddstring=fputs(stringtoadd,fp);
+int successaddstring=fputs(encryptedMes,fp);
 
     int filesize = 0;
     fseek(fp, 0, SEEK_END);
@@ -137,10 +140,17 @@ if(fwrite==NULL)
     return EXIT_FAILURE;
     fclose(fwrite);
 }
-int key = rand()*10+1;
-char* encryptedMes = (char*) malloc (strlen(extractedstring));
-strcpy(encryptedMes,extractedstring);
-  encryptCaesar(encryptedMes,key);
+int succesEnc= fputs(extractedstring,fwrite);
+if (succesEnc==EOF)
+{
+    perror("Failed to write to file");
+    return EXIT_FAILURE;
+    fclose(fwrite);
+}
+char* decryptedMes = (char*) malloc (strlen(extractedstring));
+strcpy(decryptedMes,extractedstring);
+  decryptCaesar(decryptedMes,key);
+  printf("\n%s\n",decryptedMes);
 
 char* decryptpath;
 printf("\nchoose the outpath path for decrypted file\n");
@@ -157,14 +167,14 @@ if(strcmp(outpath,decryptpath)==0)
     return EXIT_FAILURE;
     fclose(dwrite);
  }
- int decsuccess=fputs(extractedstring,dwrite);
+ int decsuccess=fputs(decryptedMes,dwrite);
  if (decsuccess==EOF)
  {
     perror("Failed to write to file");
     return EXIT_FAILURE;
     fclose(dwrite);
  }
-fputs(encryptedMes,fwrite);
+
 fclose(fred); free ( buffer);
 free(extractedstring);
 free(stringtoadd);
